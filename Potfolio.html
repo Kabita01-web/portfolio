@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kabita Bhurtel — Full Stack Developer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --ink: #0e0e0e;
+        --paper: #f5f0e8;
+        --cream: #ede7d9;
+        --accent: #c8553d;
+        --accent2: #e8a87c;
+        --muted: #7a7060;
+        --card: #ffffff;
+        --border: #ddd6c8;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        overflow-x: hidden;
+        cursor: none;
+      }
+
+      .cursor {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: var(--accent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition:
+          width 0.3s,
+          height 0.3s;
+      }
+      .cursor-ring {
+        position: fixed;
+        width: 36px;
+        height: 36px;
+        border: 1.5px solid var(--accent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition:
+          width 0.3s,
+          height 0.3s;
+        opacity: 0.6;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.4rem 3rem;
+        background: var(--paper);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-logo {
+        font-family: "DM Serif Display", serif;
+        font-size: 1.2rem;
+        color: var(--ink);
+        text-decoration: none;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        list-style: none;
+      }
+      .nav-links a {
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+
+      .hero {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding-top: 80px;
+      }
+      .hero-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 5rem 3rem 5rem 5rem;
+        position: relative;
+      }
+      .hero-eyebrow {
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.2s forwards;
+      }
+      .hero-name {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(3rem, 6vw, 5.5rem);
+        line-height: 1;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.5rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.35s forwards;
+      }
+      .hero-name em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .hero-role {
+        font-size: clamp(1rem, 2vw, 1.3rem);
+        color: var(--muted);
+        font-weight: 300;
+        margin-bottom: 2.5rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.5s forwards;
+      }
+      .hero-bio {
+        max-width: 440px;
+        font-size: 0.95rem;
+        line-height: 1.8;
+        color: #4a4035;
+        margin-bottom: 3rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.65s forwards;
+      }
+      .hero-cta {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.8s forwards;
+      }
+      .btn-primary {
+        padding: 0.85rem 2rem;
+        background: var(--accent);
+        color: white;
+        border: none;
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.82rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+        cursor: none;
+        transition:
+          background 0.2s,
+          transform 0.2s;
+      }
+      .btn-primary:hover {
+        background: #a8402c;
+        transform: translateY(-2px);
+      }
+      .btn-outline {
+        padding: 0.85rem 2rem;
+        background: transparent;
+        color: var(--ink);
+        border: 1.5px solid var(--border);
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.82rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+        cursor: none;
+        transition:
+          border-color 0.2s,
+          color 0.2s;
+      }
+      .btn-outline:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      .hero-right {
+        background: var(--cream);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-illustration {
+        width: 320px;
+        height: 320px;
+        position: relative;
+      }
+      .avatar-circle {
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #e8a87c, #c8553d);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "DM Serif Display", serif;
+        font-size: 5rem;
+        color: white;
+        margin: auto;
+        position: relative;
+        z-index: 2;
+        animation: float 4s ease-in-out infinite;
+        box-shadow: 0 30px 60px rgba(200, 85, 61, 0.25);
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-12px);
+        }
+      }
+      .orbit {
+        position: absolute;
+        border: 1px dashed var(--border);
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .orbit-1 {
+        width: 300px;
+        height: 300px;
+        animation: spin 18s linear infinite;
+      }
+      .orbit-2 {
+        width: 380px;
+        height: 380px;
+        animation: spin 28s linear infinite reverse;
+      }
+      .orbit-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--accent);
+        position: absolute;
+        top: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .orbit-dot-2 {
+        background: var(--accent2);
+        top: auto;
+        bottom: -5px;
+      }
+      @keyframes spin {
+        from {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        to {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
+      .hero-stats {
+        position: absolute;
+        bottom: 3rem;
+        left: 3rem;
+        display: flex;
+        gap: 2.5rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 1s forwards;
+      }
+      .stat-num {
+        font-family: "DM Serif Display", serif;
+        font-size: 2rem;
+        color: var(--accent);
+        line-height: 1;
+      }
+      .stat-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 0.25rem;
+      }
+
+      section {
+        padding: 6rem 5rem;
+      }
+      .section-label {
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.75rem;
+      }
+      .section-title {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.1;
+        margin-bottom: 3rem;
+      }
+
+      .skills-section {
+        background: var(--ink);
+      }
+      .skills-section .section-label {
+        color: var(--accent2);
+      }
+      .skills-section .section-title {
+        color: var(--paper);
+      }
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1px;
+        background: #2a2520;
+        border: 1px solid #2a2520;
+      }
+      .skill-card {
+        background: #161410;
+        padding: 2rem 1.75rem;
+        transition: background 0.2s;
+      }
+      .skill-card:hover {
+        background: #1e1a16;
+      }
+      .skill-icon {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+      }
+      .skill-name {
+        font-family: "DM Serif Display", serif;
+        font-size: 1.15rem;
+        color: var(--paper);
+        margin-bottom: 0.5rem;
+      }
+      .skill-desc {
+        font-size: 0.8rem;
+        color: #7a7060;
+        line-height: 1.6;
+      }
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: 1rem;
+      }
+      .skill-tag {
+        font-size: 0.68rem;
+        padding: 0.2rem 0.6rem;
+        background: #2a2520;
+        color: var(--accent2);
+        letter-spacing: 0.05em;
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+      }
+      .project-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        overflow: hidden;
+        transition:
+          transform 0.25s,
+          box-shadow 0.25s;
+      }
+      .project-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+      }
+      .project-thumb {
+        height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3.5rem;
+      }
+      .thumb-1 {
+        background: linear-gradient(135deg, #fde8d8, #f5c4a8);
+      }
+      .thumb-2 {
+        background: linear-gradient(135deg, #d8e8fd, #a8c4f5);
+      }
+      .thumb-3 {
+        background: linear-gradient(135deg, #d8fde8, #a8f5c4);
+      }
+      .project-body {
+        padding: 1.5rem;
+      }
+      .project-badges {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        margin-bottom: 0.85rem;
+      }
+      .badge {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.65rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+      .badge-php {
+        background: #e8d8fd;
+        color: #7c3dc8;
+      }
+      .badge-react {
+        background: #d8eeff;
+        color: #1d6ea8;
+      }
+      .badge-wip {
+        background: #fff3d8;
+        color: #b87800;
+      }
+      .project-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 1.2rem;
+        margin-bottom: 0.6rem;
+      }
+      .project-desc {
+        font-size: 0.84rem;
+        color: var(--muted);
+        line-height: 1.7;
+        margin-bottom: 1.25rem;
+      }
+      .project-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+        font-size: 0.75rem;
+        color: var(--muted);
+      }
+      .project-link {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.78rem;
+        transition: letter-spacing 0.2s;
+      }
+      .project-link:hover {
+        letter-spacing: 0.05em;
+      }
+
+      .learning-section {
+        background: var(--cream);
+      }
+      .learning-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+      }
+      .learning-item {
+        background: var(--paper);
+        border: 1px solid var(--border);
+        padding: 1.5rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      .learning-icon {
+        font-size: 1.5rem;
+        flex-shrink: 0;
+      }
+      .learning-title {
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+      }
+      .learning-note {
+        font-size: 0.78rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .progress-bar {
+        height: 3px;
+        background: var(--border);
+        margin-top: 0.75rem;
+        border-radius: 2px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--accent);
+        border-radius: 2px;
+        width: 0;
+        transition: width 1.5s ease;
+      }
+
+      .contact-section {
+        background: var(--ink);
+        text-align: center;
+        padding: 7rem 3rem;
+      }
+      .contact-section .section-label {
+        color: var(--accent2);
+      }
+      .contact-title {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        color: var(--paper);
+        line-height: 1.05;
+        margin-bottom: 1.5rem;
+      }
+      .contact-title em {
+        color: var(--accent);
+        font-style: italic;
+      }
+      .contact-sub {
+        color: #7a7060;
+        font-size: 1rem;
+        margin-bottom: 3rem;
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.7;
+      }
+      .contact-links {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .contact-link {
+        padding: 0.85rem 2rem;
+        border: 1px solid #2a2520;
+        color: var(--paper);
+        text-decoration: none;
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition:
+          background 0.2s,
+          border-color 0.2s;
+        cursor: none;
+      }
+      .contact-link:hover,
+      .contact-link.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+      }
+
+      footer {
+        background: #080806;
+        padding: 1.5rem 5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.75rem;
+        color: #3a3530;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        nav {
+          padding: 1rem 1.5rem;
+        }
+        .nav-links {
+          display: none;
+        }
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .hero-right {
+          display: none;
+        }
+        .hero-left {
+          padding: 4rem 1.5rem 5rem;
+        }
+        section {
+          padding: 4rem 1.5rem;
+        }
+        .hero-stats {
+          left: 1.5rem;
+          bottom: 2rem;
+        }
+        footer {
+          padding: 1.5rem;
+          flex-direction: column;
+          gap: 0.5rem;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <nav>
+      <a class="nav-logo" href="#">KB</a>
+      <ul class="nav-links">
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#learning">Learning</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-left">
+        <div class="hero-eyebrow">Available for freelance work</div>
+        <h1 class="hero-name">Kabita<br /><em>Bhurtel</em></h1>
+        <p class="hero-role">Full Stack Web Developer</p>
+        <p class="hero-bio">
+          I build modern web applications using the MERN stack — from responsive
+          React frontends to Node.js/Express backends with MongoDB. Currently
+          growing toward full MERN freelance work on Upwork.
+        </p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn-primary">View My Work</a>
+          <a href="#contact" class="btn-outline">Get In Touch</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-num">3</div>
+            <div class="stat-label">Projects</div>
+          </div>
+          <div>
+            <div class="stat-num">MERN</div>
+            <div class="stat-label">Stack</div>
+          </div>
+          <div>
+            <div class="stat-num">Open</div>
+            <div class="stat-label">To Work</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-illustration">
+          <div class="orbit orbit-1"><div class="orbit-dot"></div></div>
+          <div class="orbit orbit-2">
+            <div class="orbit-dot orbit-dot-2"></div>
+          </div>
+          <div class="avatar-circle">KB</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <section class="skills-section" id="skills" style="padding: 5rem">
+      <div class="section-label">What I work with</div>
+      <h2 class="section-title">My Tech Stack</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-icon">⚛️</div>
+          <div class="skill-name">React</div>
+          <div class="skill-desc">
+            Building interactive UIs with components, hooks, and state
+            management.
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">useState</span
+            ><span class="skill-tag">useEffect</span
+            ><span class="skill-tag">JSX</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">⚡</div>
+          <div class="skill-name">Node & Express</div>
+          <div class="skill-desc">
+            REST API development, routing, middleware, and server-side logic.
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">REST APIs</span
+            ><span class="skill-tag">Middleware</span
+            ><span class="skill-tag">JWT</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🍃</div>
+          <div class="skill-name">MongoDB</div>
+          <div class="skill-desc">
+            NoSQL database design with Mongoose schemas and queries.
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">Mongoose</span
+            ><span class="skill-tag">CRUD</span
+            ><span class="skill-tag">Atlas</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🐘</div>
+          <div class="skill-name">PHP</div>
+          <div class="skill-desc">
+            Backend development with PHP-powered APIs and web apps.
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">Backend</span
+            ><span class="skill-tag">APIs</span
+            ><span class="skill-tag">MySQL</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🎨</div>
+          <div class="skill-name">HTML & CSS</div>
+          <div class="skill-desc">
+            Semantic markup and responsive design with modern CSS.
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">Flexbox</span
+            ><span class="skill-tag">Grid</span
+            ><span class="skill-tag">Responsive</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🔧</div>
+          <div class="skill-name">JavaScript</div>
+          <div class="skill-desc">
+            ES6+, async/await, fetch API, and DOM manipulation.
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">ES6+</span
+            ><span class="skill-tag">Async/Await</span
+            ><span class="skill-tag">fetch()</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" style="background: var(--paper); padding: 5rem">
+      <div class="section-label">Things I've built</div>
+      <h2 class="section-title">Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-thumb thumb-1">🛒</div>
+          <div class="project-body">
+            <div class="project-badges">
+              <span class="badge badge-react">React</span
+              ><span class="badge badge-php">PHP Backend</span>
+            </div>
+            <div class="project-title">E-Commerce Web App</div>
+            <p class="project-desc">
+              A full-stack e-commerce application with product listings,
+              shopping cart, and user authentication. React frontend connected
+              to a PHP REST API backend.
+            </p>
+            <div class="project-footer">
+              <span>React · PHP · MySQL</span
+              ><a href="#" class="project-link">View Project →</a>
+            </div>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-thumb thumb-2">📋</div>
+          <div class="project-body">
+            <div class="project-badges">
+              <span class="badge badge-react">React</span
+              ><span class="badge badge-wip">Frontend</span>
+            </div>
+            <div class="project-title">Task Dashboard UI</div>
+            <p class="project-desc">
+              A clean task management dashboard with filters, status tracking,
+              and a responsive layout. Focused on smooth interactions and
+              component architecture.
+            </p>
+            <div class="project-footer">
+              <span>React · CSS · JavaScript</span
+              ><a href="#" class="project-link">View Project →</a>
+            </div>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-thumb thumb-3">🌐</div>
+          <div class="project-body">
+            <div class="project-badges">
+              <span class="badge badge-react">React</span
+              ><span class="badge badge-wip">Frontend</span>
+            </div>
+            <div class="project-title">Landing Page Template</div>
+            <p class="project-desc">
+              A multi-section responsive landing page with animations, smooth
+              scroll, and mobile-first design. Demonstrates strong UI layout and
+              component skills.
+            </p>
+            <div class="project-footer">
+              <span>React · CSS · Animations</span
+              ><a href="#" class="project-link">View Project →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p
+        style="
+          margin-top: 2rem;
+          font-size: 0.82rem;
+          color: var(--muted);
+          font-style: italic;
+        "
+      >
+        💡 Full MERN stack projects coming soon — backend integration in
+        progress!
+      </p>
+    </section>
+
+    <!-- LEARNING -->
+    <section class="learning-section" id="learning">
+      <div class="section-label">In progress</div>
+      <h2 class="section-title">Currently Learning</h2>
+      <div class="learning-list">
+        <div class="learning-item">
+          <div class="learning-icon">🔗</div>
+          <div>
+            <div class="learning-title">React ↔ Express Integration</div>
+            <div class="learning-note">
+              Connecting React to Express with fetch & axios, handling CORS,
+              building full REST APIs.
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" data-width="65"></div>
+            </div>
+          </div>
+        </div>
+        <div class="learning-item">
+          <div class="learning-icon">🔀</div>
+          <div>
+            <div class="learning-title">Express Middleware & Routing</div>
+            <div class="learning-note">
+              Custom middleware, route protection with JWT, and clean Express
+              app structure.
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" data-width="55"></div>
+            </div>
+          </div>
+        </div>
+        <div class="learning-item">
+          <div class="learning-icon">🍃</div>
+          <div>
+            <div class="learning-title">MongoDB & Mongoose</div>
+            <div class="learning-note">
+              Schema design, model relationships, CRUD operations, and MongoDB
+              Atlas setup.
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" data-width="50"></div>
+            </div>
+          </div>
+        </div>
+        <div class="learning-item">
+          <div class="learning-icon">🚀</div>
+          <div>
+            <div class="learning-title">MERN Deployment</div>
+            <div class="learning-note">
+              Deploying full MERN apps to Render and Vercel with MongoDB Atlas
+              in production.
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" data-width="30"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact">
+      <div class="section-label">Let's work together</div>
+      <h2 class="contact-title">
+        Open to<br /><em>Freelance</em><br />Projects
+      </h2>
+      <p class="contact-sub">
+        Looking for web development work — React frontends, full MERN stack
+        builds, or anything in between. Let's create something great together.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:kabita@email.com" class="contact-link primary"
+          >✉ Email Me</a
+        >
+        <a href="https://upwork.com" target="_blank" class="contact-link"
+          >Upwork Profile</a
+        >
+        <a href="https://github.com" target="_blank" class="contact-link"
+          >GitHub</a
+        >
+        <a href="https://linkedin.com" target="_blank" class="contact-link"
+          >LinkedIn</a
+        >
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 Kabita Bhurtel</span>
+      <span>Full Stack Developer · MERN Stack</span>
+    </footer>
+
+    <script>
+      // Cursor
+      const cursor = document.getElementById("cursor");
+      const ring = document.getElementById("cursorRing");
+      let mx = 0,
+        my = 0,
+        rx = 0,
+        ry = 0;
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        cursor.style.left = mx + "px";
+        cursor.style.top = my + "px";
+      });
+      (function animRing() {
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.left = rx + "px";
+        ring.style.top = ry + "px";
+        requestAnimationFrame(animRing);
+      })();
+      document.querySelectorAll("a,button").forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          cursor.style.width = "16px";
+          cursor.style.height = "16px";
+          ring.style.width = "50px";
+          ring.style.height = "50px";
+        });
+        el.addEventListener("mouseleave", () => {
+          cursor.style.width = "10px";
+          cursor.style.height = "10px";
+          ring.style.width = "36px";
+          ring.style.height = "36px";
+        });
+      });
+
+      // Progress bars on scroll
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.querySelectorAll(".progress-fill").forEach((b) => {
+                b.style.width = b.dataset.width + "%";
+              });
+            }
+          });
+        },
+        { threshold: 0.3 },
+      );
+      document
+        .querySelectorAll(".learning-section")
+        .forEach((s) => io.observe(s));
+    </script>
+  </body>
+</html>

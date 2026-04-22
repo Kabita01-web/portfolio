@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kabita Bhurtel — Full Stack Developer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --ink: #0e0e0e;
+        --paper: #f5f0e8;
+        --cream: #ede7d9;
+        --accent: #c8553d;
+        --accent2: #e8a87c;
+        --muted: #7a7060;
+        --card: #ffffff;
+        --border: #ddd6c8;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        overflow-x: hidden;
+        cursor: none;
+      }
+
+      .cursor {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: var(--accent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition:
+          width 0.3s,
+          height 0.3s;
+      }
+      .cursor-ring {
+        position: fixed;
+        width: 36px;
+        height: 36px;
+        border: 1.5px solid var(--accent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition:
+          width 0.3s,
+          height 0.3s;
+        opacity: 0.6;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.4rem 3rem;
+        background: var(--paper);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-logo {
+        font-family: "DM Serif Display", serif;
+        font-size: 1.2rem;
+        color: var(--ink);
+        text-decoration: none;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        list-style: none;
+      }
+      .nav-links a {
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--accent);
+      }
+
+      .hero {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding-top: 80px;
+      }
+      .hero-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 5rem 3rem 5rem 5rem;
+        position: relative;
+      }
+      .hero-eyebrow {
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.2s forwards;
+      }
+      .hero-name {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(3rem, 6vw, 5.5rem);
+        line-height: 1;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.5rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.35s forwards;
+      }
+      .hero-name em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .hero-role {
+        font-size: clamp(1rem, 2vw, 1.3rem);
+        color: var(--muted);
+        font-weight: 300;
+        margin-bottom: 2.5rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.5s forwards;
+      }
+      .hero-bio {
+        max-width: 440px;
+        font-size: 0.95rem;
+        line-height: 1.8;
+        color: #4a4035;
+        margin-bottom: 3rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.65s forwards;
+      }
+      .hero-cta {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.8s forwards;
+      }
+      .btn-primary {
+        padding: 0.85rem 2rem;
+        background: var(--accent);
+        color: white;
+        border: none;
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.82rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+        cursor: none;
+        transition:
+          background 0.2s,
+          transform 0.2s;
+      }
+      .btn-primary:hover {
+        background: #a8402c;
+        transform: translateY(-2px);
+      }
+      .btn-outline {
+        padding: 0.85rem 2rem;
+        background: transparent;
+        color: var(--ink);
+        border: 1.5px solid var(--border);
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.82rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+        cursor: none;
+        transition:
+          border-color 0.2s,
+          color 0.2s;
+      }
+      .btn-outline:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      .hero-right {
+        background: var(--cream);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-illustration {
+        width: 320px;
+        height: 320px;
+        position: relative;
+      }
+      .avatar-circle {
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #e8a87c, #c8553d);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "DM Serif Display", serif;
+        font-size: 5rem;
+        color: white;
+        margin: auto;
+        position: relative;
+        z-index: 2;
+        animation: float 4s ease-in-out infinite;
+        box-shadow: 0 30px 60px rgba(200, 85, 61, 0.25);
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-12px);
+        }
+      }
+      .orbit {
+        position: absolute;
+        border: 1px dashed var(--border);
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .orbit-1 {
+        width: 300px;
+        height: 300px;
+        animation: spin 18s linear infinite;
+      }
+      .orbit-2 {
+        width: 380px;
+        height: 380px;
+        animation: spin 28s linear infinite reverse;
+      }
+      .orbit-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--accent);
+        position: absolute;
+        top: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .orbit-dot-2 {
+        background: var(--accent2);
+        top: auto;
+        bottom: -5px;
+      }
+      @keyframes spin {
+        from {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        to {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
+      .hero-stats {
+        position: absolute;
+        bottom: 3rem;
+        left: 3rem;
+        display: flex;
+        gap: 2.5rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 1s forwards;
+      }
+      .stat-num {
+        font-family: "DM Serif Display", serif;
+        font-size: 2rem;
+        color: var(--accent);
+        line-height: 1;
+      }
+      .stat-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 0.25rem;
+      }
+
+      .page-intro {
+        padding: 8rem 5rem 4rem;
+        background: var(--cream);
+        text-align: center;
+      }
+      .page-eyebrow {
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+      .page-title {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        line-height: 1.1;
+      }
+      .page-desc {
+        max-width: 500px;
+        margin: 1.5rem auto 0;
+        font-size: 1rem;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      footer {
+        background: #080806;
+        padding: 1.5rem 5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.75rem;
+        color: #3a3530;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        nav {
+          padding: 1rem 1.5rem;
+        }
+        .nav-links {
+          display: none;
+        }
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .hero-right {
+          display: none;
+        }
+        .hero-left {
+          padding: 4rem 1.5rem 5rem;
+        }
+        .hero-stats {
+          left: 1.5rem;
+          bottom: 2rem;
+        }
+        .page-intro {
+          padding: 6rem 1.5rem 3rem;
+        }
+        footer {
+          padding: 1.5rem;
+          flex-direction: column;
+          gap: 0.5rem;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <nav>
+      <a class="nav-logo" href="index.html">KB</a>
+      <ul class="nav-links">
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="learning.html">Learning</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-left">
+        <div class="hero-eyebrow">Available for freelance work</div>
+        <h1 class="hero-name">Kabita<br /><em>Bhurtel</em></h1>
+        <p class="hero-role">Full Stack Web Developer</p>
+        <p class="hero-bio">
+          I build modern web applications using the MERN stack — from responsive
+          React frontends to Node.js/Express backends with MongoDB. Currently
+          growing toward full MERN freelance work on Upwork.
+        </p>
+        <div class="hero-cta">
+          <a href="projects.html" class="btn-primary">View My Work</a>
+          <a href="contact.html" class="btn-outline">Get In Touch</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-num">3</div>
+            <div class="stat-label">Projects</div>
+          </div>
+          <div>
+            <div class="stat-num">MERN</div>
+            <div class="stat-label">Stack</div>
+          </div>
+          <div>
+            <div class="stat-num">Open</div>
+            <div class="stat-label">To Work</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-illustration">
+          <div class="orbit orbit-1"><div class="orbit-dot"></div></div>
+          <div class="orbit orbit-2">
+            <div class="orbit-dot orbit-dot-2"></div>
+          </div>
+          <div class="avatar-circle">KB</div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <span>© 2026 Kabita Bhurtel</span>
+      <span>Full Stack Developer · MERN Stack</span>
+    </footer>
+
+    <script>
+      const cursor = document.getElementById("cursor");
+      const ring = document.getElementById("cursorRing");
+      let mx = 0,
+        my = 0,
+        rx = 0,
+        ry = 0;
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        cursor.style.left = mx + "px";
+        cursor.style.top = my + "px";
+      });
+      (function animRing() {
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.left = rx + "px";
+        ring.style.top = ry + "px";
+        requestAnimationFrame(animRing);
+      })();
+      document.querySelectorAll("a,button").forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          cursor.style.width = "16px";
+          cursor.style.height = "16px";
+          ring.style.width = "50px";
+          ring.style.height = "50px";
+        });
+        el.addEventListener("mouseleave", () => {
+          cursor.style.width = "10px";
+          cursor.style.height = "10px";
+          ring.style.width = "36px";
+          ring.style.height = "36px";
+        });
+      });
+    </script>
+  </body>
+</html>

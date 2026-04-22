@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact — Kabita Bhurtel</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --ink: #0e0e0e;
+        --paper: #f5f0e8;
+        --cream: #ede7d9;
+        --accent: #c8553d;
+        --accent2: #e8a87c;
+        --muted: #7a7060;
+        --card: #ffffff;
+        --border: #ddd6c8;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--ink);
+        color: var(--ink);
+        overflow-x: hidden;
+        cursor: none;
+      }
+
+      .cursor {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: var(--accent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: width 0.3s, height 0.3s;
+      }
+      .cursor-ring {
+        position: fixed;
+        width: 36px;
+        height: 36px;
+        border: 1.5px solid var(--accent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: width 0.3s, height 0.3s;
+        opacity: 0.6;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.4rem 3rem;
+        background: var(--ink);
+        border-bottom: 1px solid #2a2520;
+      }
+      .nav-logo {
+        font-family: "DM Serif Display", serif;
+        font-size: 1.2rem;
+        color: var(--paper);
+        text-decoration: none;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        list-style: none;
+      }
+      .nav-links a {
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--accent);
+      }
+
+      .contact-section {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 8rem 3rem 5rem;
+        text-align: center;
+      }
+      .section-label {
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent2);
+        margin-bottom: 1rem;
+      }
+      .contact-title {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        color: var(--paper);
+        line-height: 1.05;
+        margin-bottom: 1.5rem;
+      }
+      .contact-title em {
+        color: var(--accent);
+        font-style: italic;
+      }
+      .contact-sub {
+        color: #7a7060;
+        font-size: 1.1rem;
+        margin-bottom: 3rem;
+        max-width: 520px;
+        line-height: 1.7;
+      }
+      .contact-links {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .contact-link {
+        padding: 0.9rem 2.2rem;
+        border: 1px solid #2a2520;
+        color: var(--paper);
+        text-decoration: none;
+        font-size: 0.82rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition: background 0.2s, border-color 0.2s;
+        cursor: none;
+      }
+      .contact-link:hover,
+      .contact-link.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .contact-info {
+        margin-top: 4rem;
+        padding-top: 3rem;
+        border-top: 1px solid #2a2520;
+      }
+      .contact-info p {
+        color: #7a7060;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+      }
+      .contact-info a {
+        color: var(--accent2);
+        text-decoration: none;
+      }
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
+
+      footer {
+        background: #080806;
+        padding: 1.5rem 5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.75rem;
+        color: #3a3530;
+      }
+
+      @media (max-width: 768px) {
+        nav {
+          padding: 1rem 1.5rem;
+        }
+        .nav-links {
+          display: none;
+        }
+        .contact-section {
+          padding: 6rem 1.5rem 4rem;
+        }
+        footer {
+          padding: 1.5rem;
+          flex-direction: column;
+          gap: 0.5rem;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <nav>
+      <a class="nav-logo" href="index.html">KB</a>
+      <ul class="nav-links">
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="learning.html">Learning</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+    </nav>
+
+    <section class="contact-section">
+      <div class="section-label">Let's work together</div>
+      <h1 class="contact-title">
+        Open to<br /><em>Freelance</em><br />Projects
+      </h1>
+      <p class="contact-sub">
+        Looking for web development work — React frontends, full MERN stack builds, or anything in between. Let's create something great together.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:kabita@email.com" class="contact-link primary">✉ Email Me</a>
+        <a href="https://upwork.com" target="_blank" class="contact-link">Upwork Profile</a>
+        <a href="https://github.com" target="_blank" class="contact-link">GitHub</a>
+        <a href="https://linkedin.com" target="_blank" class="contact-link">LinkedIn</a>
+      </div>
+      <div class="contact-info">
+        <p>Or reach out directly:</p>
+        <a href="mailto:kabita@email.com">kabita@email.com</a>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 Kabita Bhurtel</span>
+      <span>Full Stack Developer · MERN Stack</span>
+    </footer>
+
+    <script>
+      const cursor = document.getElementById("cursor");
+      const ring = document.getElementById("cursorRing");
+      let mx = 0, my = 0, rx = 0, ry = 0;
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        cursor.style.left = mx + "px";
+        cursor.style.top = my + "px";
+      });
+      (function animRing() {
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.left = rx + "px";
+        ring.style.top = ry + "px";
+        requestAnimationFrame(animRing);
+      })();
+      document.querySelectorAll("a,button").forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          cursor.style.width = "16px";
+          cursor.style.height = "16px";
+          ring.style.width = "50px";
+          ring.style.height = "50px";
+        });
+        el.addEventListener("mouseleave", () => {
+          cursor.style.width = "10px";
+          cursor.style.height = "10px";
+          ring.style.width = "36px";
+          ring.style.height = "36px";
+        });
+      });
+    </script>
+  </body>
+</html>

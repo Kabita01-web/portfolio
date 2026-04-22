@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects — Kabita Bhurtel</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --ink: #0e0e0e;
+        --paper: #f5f0e8;
+        --cream: #ede7d9;
+        --accent: #c8553d;
+        --accent2: #e8a87c;
+        --muted: #7a7060;
+        --card: #ffffff;
+        --border: #ddd6c8;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        overflow-x: hidden;
+        cursor: none;
+      }
+
+      .cursor {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: var(--accent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: width 0.3s, height 0.3s;
+      }
+      .cursor-ring {
+        position: fixed;
+        width: 36px;
+        height: 36px;
+        border: 1.5px solid var(--accent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: width 0.3s, height 0.3s;
+        opacity: 0.6;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.4rem 3rem;
+        background: var(--paper);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-logo {
+        font-family: "DM Serif Display", serif;
+        font-size: 1.2rem;
+        color: var(--ink);
+        text-decoration: none;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        list-style: none;
+      }
+      .nav-links a {
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--accent);
+      }
+
+      .page-header {
+        padding: 8rem 5rem 4rem;
+        background: var(--cream);
+        text-align: center;
+      }
+      .page-eyebrow {
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+      .page-title {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        line-height: 1.1;
+      }
+      .page-desc {
+        max-width: 500px;
+        margin: 1.5rem auto 0;
+        font-size: 1rem;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .projects-section {
+        padding: 5rem;
+      }
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+      }
+      .project-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        overflow: hidden;
+        transition: transform 0.25s, box-shadow 0.25s;
+      }
+      .project-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+      }
+      .project-thumb {
+        height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+      }
+      .thumb-1 {
+        background: linear-gradient(135deg, #fde8d8, #f5c4a8);
+      }
+      .thumb-2 {
+        background: linear-gradient(135deg, #d8e8fd, #a8c4f5);
+      }
+      .thumb-3 {
+        background: linear-gradient(135deg, #d8fde8, #a8f5c4);
+      }
+      .project-body {
+        padding: 1.75rem;
+      }
+      .project-badges {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 0.85rem;
+      }
+      .badge {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.65rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+      .badge-php {
+        background: #e8d8fd;
+        color: #7c3dc8;
+      }
+      .badge-react {
+        background: #d8eeff;
+        color: #1d6ea8;
+      }
+      .badge-wip {
+        background: #fff3d8;
+        color: #b87800;
+      }
+      .project-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 1.3rem;
+        margin-bottom: 0.6rem;
+      }
+      .project-desc {
+        font-size: 0.9rem;
+        color: var(--muted);
+        line-height: 1.7;
+        margin-bottom: 1.25rem;
+      }
+      .project-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .project-link {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.82rem;
+        transition: letter-spacing 0.2s;
+      }
+      .project-link:hover {
+        letter-spacing: 0.05em;
+      }
+
+      .coming-soon {
+        text-align: center;
+        padding: 3rem;
+        margin-top: 2rem;
+        background: var(--cream);
+        border-radius: 8px;
+      }
+      .coming-soon p {
+        font-size: 0.9rem;
+        color: var(--muted);
+        font-style: italic;
+      }
+
+      footer {
+        background: #080806;
+        padding: 1.5rem 5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.75rem;
+        color: #3a3530;
+      }
+
+      @media (max-width: 768px) {
+        nav {
+          padding: 1rem 1.5rem;
+        }
+        .nav-links {
+          display: none;
+        }
+        .page-header {
+          padding: 6rem 1.5rem 3rem;
+        }
+        .projects-section {
+          padding: 3rem 1.5rem;
+        }
+        footer {
+          padding: 1.5rem;
+          flex-direction: column;
+          gap: 0.5rem;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <nav>
+      <a class="nav-logo" href="index.html">KB</a>
+      <ul class="nav-links">
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="learning.html">Learning</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="page-header">
+      <div class="page-eyebrow">Things I've built</div>
+      <h1 class="page-title">Projects</h1>
+      <p class="page-desc">
+        A collection of web applications and side projects I've worked on.
+      </p>
+    </div>
+
+    <section class="projects-section">
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-thumb thumb-1">🛒</div>
+          <div class="project-body">
+            <div class="project-badges">
+              <span class="badge badge-react">React</span>
+              <span class="badge badge-php">PHP Backend</span>
+            </div>
+            <div class="project-title">E-Commerce Web App</div>
+            <p class="project-desc">
+              A full-stack e-commerce application with product listings, shopping cart, and user authentication. React frontend connected to a PHP REST API backend.
+            </p>
+            <div class="project-footer">
+              <span>React · PHP · MySQL</span>
+              <a href="#" class="project-link">View Project →</a>
+            </div>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-thumb thumb-2">📋</div>
+          <div class="project-body">
+            <div class="project-badges">
+              <span class="badge badge-react">React</span>
+              <span class="badge badge-wip">Frontend</span>
+            </div>
+            <div class="project-title">Task Dashboard UI</div>
+            <p class="project-desc">
+              A clean task management dashboard with filters, status tracking, and a responsive layout. Focused on smooth interactions and component architecture.
+            </p>
+            <div class="project-footer">
+              <span>React · CSS · JavaScript</span>
+              <a href="#" class="project-link">View Project →</a>
+            </div>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-thumb thumb-3">🌐</div>
+          <div class="project-body">
+            <div class="project-badges">
+              <span class="badge badge-react">React</span>
+              <span class="badge badge-wip">Frontend</span>
+            </div>
+            <div class="project-title">Landing Page Template</div>
+            <p class="project-desc">
+              A multi-section responsive landing page with animations, smooth scroll, and mobile-first design. Demonstrates strong UI layout and component skills.
+            </p>
+            <div class="project-footer">
+              <span>React · CSS · Animations</span>
+              <a href="#" class="project-link">View Project →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="coming-soon">
+        <p>💡 Full MERN stack projects coming soon — backend integration in progress!</p>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 Kabita Bhurtel</span>
+      <span>Full Stack Developer · MERN Stack</span>
+    </footer>
+
+    <script>
+      const cursor = document.getElementById("cursor");
+      const ring = document.getElementById("cursorRing");
+      let mx = 0, my = 0, rx = 0, ry = 0;
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        cursor.style.left = mx + "px";
+        cursor.style.top = my + "px";
+      });
+      (function animRing() {
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.left = rx + "px";
+        ring.style.top = ry + "px";
+        requestAnimationFrame(animRing);
+      })();
+      document.querySelectorAll("a,button").forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          cursor.style.width = "16px";
+          cursor.style.height = "16px";
+          ring.style.width = "50px";
+          ring.style.height = "50px";
+        });
+        el.addEventListener("mouseleave", () => {
+          cursor.style.width = "10px";
+          cursor.style.height = "10px";
+          ring.style.width = "36px";
+          ring.style.height = "36px";
+        });
+      });
+    </script>
+  </body>
+</html>
