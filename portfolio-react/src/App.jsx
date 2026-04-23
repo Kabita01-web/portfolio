@@ -1,3 +1,4 @@
+import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -8,7 +9,7 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <>
+    <ThemeProvider>
       <Navbar />
       <main>
         <Hero />
@@ -18,7 +19,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
-    </>
+    </ThemeProvider>
   );
 }
 

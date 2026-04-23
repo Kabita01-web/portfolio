@@ -1,53 +1,110 @@
 const stats = [
-  { number: '3+', label: 'Projects Completed' },
-  { number: 'MERN', label: 'Tech Stack' },
-  { number: 'Open', label: 'To Work' },
+  { number: "3+", label: "Projects Completed", icon: "🚀" },
+  { number: "MERN", label: "Tech Stack", icon: "⚛️" },
+  { number: "Open", label: "To Work", icon: "💼" },
 ];
 
 const About = () => {
   return (
-    <section id="about" className="py-16 md:py-24 px-4 md:px-8 bg-[#0F172A]">
-      <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 gap-12">
-        <div>
-          <span className="inline-block text-xs font-semibold tracking-[0.15em] uppercase text-[#22D3EE] mb-4">
-            About Me
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#F8FAFC] leading-tight mb-6">
-            Building Modern Web <span className="text-[#22D3EE]">Experiences</span>
-          </h2>
-          <p className="text-base text-[#94A3B8] leading-relaxed mb-4">
-            I'm a Full Stack Web Developer specializing in the MERN stack (MongoDB,
-            Express.js, React, Node.js). I love creating responsive, user-friendly
-            web applications that solve real problems.
-          </p>
-          <p className="text-base text-[#94A3B8] leading-relaxed mb-8">
-            Currently, I'm focused on building my freelance career on Upwork, 
-            working on exciting projects with clients worldwide. I'm always eager
-            to learn new technologies and take on challenging tasks.
-          </p>
-          <div className="flex gap-8 pt-8 border-t border-white/10">
-            {stats.map((stat, index) => (
-              <div key={index} className="flex flex-col">
-                <span className="text-3xl font-bold text-[#22D3EE] leading-none">{stat.number}</span>
-                <span className="text-sm text-[#94A3B8] mt-1">{stat.label}</span>
+    <section id="about" className="section-padding bg-bg-primary relative">
+      {/* Background decoration */}
+      <div className="absolute top-1/2 left-0 w-[300px] h-[300px] bg-accent/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div className="container-main">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+          {/* Left Column */}
+          <div>
+            <div className="section-label">
+              <span className="w-8 h-[2px] bg-accent"></span>
+              About Me
+            </div>
+            <h2 className="section-title mb-6">
+              Building Modern Web{" "}
+              <span className="text-accent">Experiences</span>
+            </h2>
+            <div className="space-y-4">
+              <p className="text-base md:text-lg text-text-secondary leading-relaxed">
+                I'm a Full Stack Web Developer specializing in the MERN stack
+                (MongoDB, Express.js, React, Node.js). I love creating
+                responsive, user-friendly web applications that solve real
+                problems.
+              </p>
+              <p className="text-base md:text-lg text-text-secondary leading-relaxed">
+                I'm actively building my freelance career and open to working
+                with clients worldwide — whether through freelance platforms or
+                direct collaboration. I'm always eager to learn new technologies
+                and take on challenging projects.
+              </p>
+            </div>
+
+            {/* Stats */}
+            <div className="flex flex-wrap gap-6 pt-8 mt-8 border-t border-black/5 dark:border-white/10">
+              {stats.map((stat, index) => (
+                <div key={index} className="flex items-center gap-3">
+                  <span className="text-2xl">{stat.icon}</span>
+                  <div>
+                    <span className="text-2xl font-bold text-accent">
+                      {stat.number}
+                    </span>
+                    <p className="text-sm text-text-muted">{stat.label}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Column - Feature Cards */}
+          <div className="flex flex-col gap-5">
+            <div className="card card-hover p-6 md:p-8">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent text-xl shrink-0">
+                  🎯
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-text-primary mb-2">
+                    Mission
+                  </h3>
+                  <p className="text-text-secondary leading-relaxed">
+                    Deliver high-quality web solutions that exceed client
+                    expectations and provide exceptional user experiences.
+                  </p>
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-        <div className="flex flex-col gap-6">
-          <div className="bg-[#1E293B] p-8 rounded-2xl border border-white/5 transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(34,211,238,0.15)] hover:border-[#22D3EE]/30">
-            <div className="text-3xl mb-4">🎯</div>
-            <h3 className="text-xl font-semibold text-[#F8FAFC] mb-3">Mission</h3>
-            <p className="text-base text-[#94A3B8] leading-relaxed">
-              Deliver high-quality web solutions that exceed client expectations and provide exceptional user experiences.
-            </p>
-          </div>
-          <div className="bg-[#1E293B] p-8 rounded-2xl border border-white/5 transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(34,211,238,0.15)] hover:border-[#22D3EE]/30">
-            <div className="text-3xl mb-4">💡</div>
-            <h3 className="text-xl font-semibold text-[#F8FAFC] mb-3">Approach</h3>
-            <p className="text-base text-[#94A3B8] leading-relaxed">
-              Clean code, modern design patterns, and responsive development are at the core of every project I build.
-            </p>
+            </div>
+
+            <div className="card card-hover p-6 md:p-8">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent text-xl shrink-0">
+                  💡
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-text-primary mb-2">
+                    Approach
+                  </h3>
+                  <p className="text-text-secondary leading-relaxed">
+                    Clean code, modern design patterns, and responsive
+                    development are at the core of every project I build.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="card card-hover p-6 md:p-8">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent text-xl shrink-0">
+                  🌟
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-text-primary mb-2">
+                    Vision
+                  </h3>
+                  <p className="text-text-secondary leading-relaxed">
+                    To become a sought-after MERN stack developer, creating
+                    impactful web solutions for businesses globally.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
+import { useTheme } from "../context/ThemeContext";
+import { FaSun, FaMoon } from "react-icons/fa";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -11,45 +13,55 @@ const navLinks = [
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isDark, toggleTheme } = useTheme();
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0F172A] border-b border-white/5">
-      <div className="max-w-[1200px] mx-auto px-6 md:px-8 py-4 flex justify-between items-center">
-        <a
-          href="#home"
-          className="text-xl font-bold text-[#F8FAFC] hover:text-[#22D3EE] transition-colors duration-300"
-          onClick={closeMenu}
-        >
-          KB
-        </a>
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-bg-primary/80 backdrop-blur-lg border-b border-black/5 dark:border-white/5">
+      <div className="container-main">
+        <div className="flex justify-between items-center py-4">
+          {/* Logo */}
+          <a href="#home" onClick={closeMenu} className="text-xl font-bold text-text-primary hover:text-accent transition-colors duration-300">
+            KB
+          </a>
 
-        <ul
-          className={`md:flex gap-10 ${isOpen ? "flex flex-col absolute top-[60px] left-0 right-0 bg-[#1E293B] p-0 gap-0" : "hidden"}`}
-        >
+          {/* Desktop Navigation */}
+          <ul className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <li key={link.name}>
+                <a href={link.href} onClick={closeMenu} className="text-sm font-medium text-text-secondary hover:text-accent transition-colors duration-300 relative group">
+                  {link.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          {/* Theme Toggle & Mobile Menu Button */}
+          <div className="flex items-center gap-3">
+            <button onClick={toggleTheme} className="flex items-center justify-center w-10 h-10 rounded-xl bg-bg-secondary text-text-primary hover:text-accent border border-black/5 dark:border-white/10 hover:border-accent transition-all duration-300" aria-label="Toggle theme">
+              {isDark ? <FaSun size={18} /> : <FaMoon size={18} />}
+            </button>
+            <button className="md:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-bg-secondary text-text-primary" onClick={toggleMenu} aria-label="Toggle menu">
+              {isOpen ? <HiX size={24} /> : <HiMenuAlt3 size={24} />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <div className={`md:hidden absolute top-full left-0 right-0 bg-bg-primary border-b border-black/5 dark:border-white/5 transition-all duration-300 ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}>
+        <ul className="container-main py-4 flex flex-col gap-2">
           {navLinks.map((link) => (
             <li key={link.name}>
-              <a
-                href={link.href}
-                onClick={closeMenu}
-                className={`block md:inline-block py-3 md:py-0 px-6 md:px-0 text-sm font-medium text-[#94A3B8] hover:text-[#22D3EE] transition-all duration-300 relative ${isOpen ? "border-b border-white/5" : ""}`}
-              >
+              <a href={link.href} onClick={closeMenu} className="block py-3 px-4 text-base font-medium text-text-secondary hover:text-accent hover:bg-bg-secondary rounded-xl transition-all duration-300">
                 {link.name}
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#22D3EE] transition-all duration-300 hover:w-full hidden md:block"></span>
               </a>
             </li>
           ))}
         </ul>
-
-        <button
-          className="md:hidden bg-none border-none text-[#F8FAFC] cursor-pointer p-2"
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
-          {isOpen ? <HiX size={24} /> : <HiMenuAlt3 size={24} />}
-        </button>
       </div>
     </nav>
   );
