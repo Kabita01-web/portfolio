@@ -1,9 +1,30 @@
 import { motion } from "framer-motion";
 
 const stats = [
-  { number: "3+", label: "Projects Completed", icon: "🚀" },
-  { number: "MERN", label: "Tech Stack", icon: "⚛️" },
-  { number: "Open", label: "To Work", icon: "💼" },
+  { number: "3", label: "Projects Delivered", icon: "🚀" },
+  { number: "100%", label: "On-Time Delivery", icon: "⏰" },
+  { number: "Open", label: "For Freelance", icon: "💼" },
+];
+
+const featureCards = [
+  {
+    icon: "🎯",
+    title: "What I Do",
+    description:
+      "Full-stack MERN development. I take your idea and turn it into a working web app — from polished React UIs to Node.js APIs and MongoDB databases.",
+  },
+  {
+    icon: "⚡",
+    title: "How I Work",
+    description:
+      "Clean code, daily updates, and zero ghosting. I believe in building trust through transparency and delivering quality work on time.",
+  },
+  {
+    icon: "🌟",
+    title: "What I'm Looking For",
+    description:
+      "Freelance projects where I can make a real impact. Whether it's a startup MVP or a business tool, I'm here to build something great.",
+  },
 ];
 
 const cardVariants = {
@@ -17,12 +38,15 @@ const cardVariants = {
 
 const About = () => {
   return (
-    <section id="about" className="section-padding bg-bg-primary relative">
+    <section id="about" className="section-padding relative bg-bg-primary">
       {/* Background decoration */}
-      <div className="absolute top-1/2 left-0 w-[300px] h-[300px] bg-accent/5 rounded-full blur-[100px] pointer-events-none"></div>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-1/2 left-0 h-[300px] w-[300px] rounded-full bg-accent/5 blur-[100px]"
+      />
 
       <div className="container-main">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Left Column */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -31,117 +55,76 @@ const About = () => {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="section-label">
-              <span className="w-8 h-[2px] bg-accent"></span>
+              <span aria-hidden="true" className="h-[2px] w-8 bg-accent" />
               About Me
             </div>
             <h2 className="section-title mb-6">
               Building Modern Web{" "}
               <span className="text-accent">Experiences</span>
             </h2>
+
+            {/* Two short paragraphs — readable and personal */}
             <div className="space-y-4">
-              <p className="text-base md:text-lg text-text-secondary leading-relaxed">
-                I'm a Full Stack Web Developer specializing in the MERN stack
-                (MongoDB, Express.js, React, Node.js). I love creating
-                responsive, user-friendly web applications that solve real
-                problems.
+              <p className="text-base leading-relaxed text-text-secondary md:text-lg">
+                I'm Kabita — a full-stack developer who turns ideas into working
+                software. I specialize in the{" "}
+                <span className="font-medium text-accent">MERN stack</span>,
+                building everything from polished React interfaces to robust
+                Node.js backends.
               </p>
-              <p className="text-base md:text-lg text-text-secondary leading-relaxed">
-                I'm actively building my freelance career and open to working
-                with clients worldwide — whether through freelance platforms or
-                direct collaboration. I'm always eager to learn new technologies
-                and take on challenging projects.
+              <p className="text-base leading-relaxed text-text-secondary md:text-lg">
+                I got into development because I saw how many small businesses
+                were stuck with outdated websites. Now I help them go digital —
+                building tools that actually solve real problems.
               </p>
             </div>
 
             {/* Stats */}
-            <div className="flex flex-wrap gap-6 pt-8 mt-8 border-t border-black/5 dark:border-white/10">
-              {stats.map((stat, index) => (
-                <div key={index} className="flex items-center gap-3">
-                  <span className="text-2xl">{stat.icon}</span>
+            <dl className="mt-8 flex flex-wrap gap-x-8 gap-y-5 border-t border-black/5 pt-8 dark:border-white/10">
+              {stats.map((stat) => (
+                <div key={stat.label} className="flex items-center gap-3">
+                  <span aria-hidden="true" className="text-2xl">
+                    {stat.icon}
+                  </span>
                   <div>
-                    <span className="text-2xl font-bold text-accent">
+                    <dt className="sr-only">{stat.label}</dt>
+                    <dd className="text-2xl font-bold text-accent">
                       {stat.number}
-                    </span>
+                    </dd>
                     <p className="text-sm text-text-muted">{stat.label}</p>
                   </div>
                 </div>
               ))}
-            </div>
+            </dl>
           </motion.div>
 
           {/* Right Column - Feature Cards */}
           <div className="flex flex-col gap-5">
-            <motion.div
-              custom={0}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              className="card card-hover p-6 md:p-8"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent text-xl shrink-0">
-                  🎯
+            {featureCards.map(({ icon, title, description }, index) => (
+              <motion.div
+                key={title}
+                custom={index * 0.1}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                className="card card-hover p-6 md:p-7"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-xl text-accent">
+                    {icon}
+                  </div>
+                  <div>
+                    <h3 className="mb-1.5 text-base font-semibold text-text-primary">
+                      {title}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-text-secondary">
+                      {description}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-text-primary mb-2">
-                    Mission
-                  </h3>
-                  <p className="text-text-secondary leading-relaxed">
-                    Deliver high-quality web solutions that exceed client
-                    expectations and provide exceptional user experiences.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              custom={0.1}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              className="card card-hover p-6 md:p-8"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent text-xl shrink-0">
-                  💡
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-text-primary mb-2">
-                    Approach
-                  </h3>
-                  <p className="text-text-secondary leading-relaxed">
-                    Clean code, modern design patterns, and responsive
-                    development are at the core of every project I build.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              custom={0.2}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              className="card card-hover p-6 md:p-8"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent text-xl shrink-0">
-                  🌟
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-text-primary mb-2">
-                    Vision
-                  </h3>
-                  <p className="text-text-secondary leading-relaxed">
-                    To become a sought-after MERN stack developer, creating
-                    impactful web solutions for businesses globally.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>
