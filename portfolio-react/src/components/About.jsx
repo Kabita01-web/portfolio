@@ -1,8 +1,19 @@
+import { motion } from "framer-motion";
+
 const stats = [
   { number: "3+", label: "Projects Completed", icon: "🚀" },
   { number: "MERN", label: "Tech Stack", icon: "⚛️" },
   { number: "Open", label: "To Work", icon: "💼" },
 ];
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (delay = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
 
 const About = () => {
   return (
@@ -13,7 +24,12 @@ const About = () => {
       <div className="container-main">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Left Column */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
             <div className="section-label">
               <span className="w-8 h-[2px] bg-accent"></span>
               About Me
@@ -51,11 +67,18 @@ const About = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column - Feature Cards */}
           <div className="flex flex-col gap-5">
-            <div className="card card-hover p-6 md:p-8">
+            <motion.div
+              custom={0}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              className="card card-hover p-6 md:p-8"
+            >
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent text-xl shrink-0">
                   🎯
@@ -70,9 +93,16 @@ const About = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="card card-hover p-6 md:p-8">
+            <motion.div
+              custom={0.1}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              className="card card-hover p-6 md:p-8"
+            >
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent text-xl shrink-0">
                   💡
@@ -87,9 +117,16 @@ const About = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="card card-hover p-6 md:p-8">
+            <motion.div
+              custom={0.2}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              className="card card-hover p-6 md:p-8"
+            >
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent text-xl shrink-0">
                   🌟
@@ -104,7 +141,7 @@ const About = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
