@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import Parallax from "./Parallax";
 
 // TODO: import your real screenshots once added to src/assets/
 // import bitesImg from "../assets/bites-screenshot.png";
@@ -57,7 +58,13 @@ const cardVariants = {
 const Projects = () => {
   return (
     <section id="projects" className="section-padding bg-bg-primary relative">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
+      {/* Background glow — subtle drift on scroll, same treatment as About */}
+      <Parallax
+        speed={0.2}
+        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2"
+      >
+        <div className="w-[500px] h-[300px] bg-accent/5 rounded-full blur-[120px]"></div>
+      </Parallax>
 
       <div className="container-main relative z-10">
         <motion.div
