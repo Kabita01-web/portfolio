@@ -1,7 +1,7 @@
 // src/components/Skills.jsx
 import { motion } from "framer-motion";
 import { FaReact, FaHtml5, FaJs } from "react-icons/fa";
-import { SiMongodb, SiExpress, SiPhp } from "react-icons/si";
+import { SiMongodb, SiExpress } from "react-icons/si";
 
 const skills = [
   {
@@ -25,7 +25,6 @@ const skills = [
     tags: ["Mongoose Schemas", "Partial Unique Index", "Migrations"],
     color: "from-green-500 to-teal-500",
   },
-
   {
     icon: <FaHtml5 className="text-2xl" />,
     name: "HTML & CSS",
@@ -53,9 +52,15 @@ const cardVariants = {
 
 const Skills = () => {
   return (
-    <section id="skills" className="section-padding bg-bg-secondary relative">
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-accent/3 rounded-full blur-[80px] pointer-events-none"></div>
+    <section id="skills" className="section-padding relative bg-bg-secondary">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-0 right-0 h-[400px] w-[400px] rounded-full bg-accent/5 blur-[120px]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-0 left-0 h-[300px] w-[300px] rounded-full bg-accent/3 blur-[80px]"
+      />
 
       <div className="container-main relative z-10">
         <motion.div
@@ -63,43 +68,44 @@ const Skills = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          className="mb-12 text-center"
         >
-          <div className="section-label justify-center mb-4">
-            <span className="w-8 h-[2px] bg-accent"></span>
+          <div className="section-label mb-4 justify-center">
+            <span aria-hidden="true" className="h-[2px] w-8 bg-accent" />
             <span>What I Work With</span>
-            <span className="w-8 h-[2px] bg-accent"></span>
+            <span aria-hidden="true" className="h-[2px] w-8 bg-accent" />
           </div>
           <h2 className="section-title">My Tech Stack</h2>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {skills.map((skill, index) => (
             <motion.div
-              key={index}
+              key={skill.name}
               custom={index * 0.08}
               variants={cardVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
-              className="card card-hover p-6 group"
+              className="card card-hover group p-6 transition-shadow duration-300 hover:shadow-xl md:p-7"
             >
               <div
-                className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${skill.color} flex items-center justify-center text-white mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                aria-hidden="true"
+                className={`mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${skill.color} text-white shadow-lg transition-transform duration-300 group-hover:scale-110`}
               >
                 {skill.icon}
               </div>
-              <h3 className="text-xl font-semibold text-text-primary mb-2">
+              <h3 className="mb-2 text-xl font-semibold tracking-tight text-text-primary">
                 {skill.name}
               </h3>
-              <p className="text-sm text-text-secondary leading-relaxed mb-4">
+              <p className="mb-4 text-sm leading-relaxed text-text-secondary">
                 {skill.description}
               </p>
               <div className="flex flex-wrap gap-2">
-                {skill.tags.map((tag, tagIndex) => (
+                {skill.tags.map((tag) => (
                   <span
-                    key={tagIndex}
-                    className="text-xs font-medium px-3 py-1 bg-accent/10 text-accent rounded-lg"
+                    key={tag}
+                    className="rounded-lg bg-accent/10 px-3 py-1 text-xs font-medium text-accent transition-colors duration-300 group-hover:bg-accent/15"
                   >
                     {tag}
                   </span>
