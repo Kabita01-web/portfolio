@@ -1,0 +1,45 @@
+import { useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+
+/**
+ * Wrap a button or link to make it drift slightly toward the cursor on
+ * hover, then spring back on mouse leave. Keep `strength` modest — this
+ * is meant to feel like a subtle magnetic pull, not a bouncy toy.
+ *
+ * Usage:
+ *   <Magnetic>
+ *     <a href="#projects" className="btn-primary">View My Work</a>
+ *   </Magnetic>
+ *
+ * Only wrap ONE interactive child. Text and icons inside still work
+ * normally — this only affects the outer transform.
+ */
+export default function Magnetic({ children, strength = 0.3 }) {
+  const ref = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+  if (shouldReduceMotion) return children;
+
+  const handleMouseMove = (e) => {
+    const rect = ref.current.getBoundingClientRect();
+    const relX = e.clientX - (rect.left + rect.width / 2);
+    const relY = e.clientY - (rect.top + rect.height / 2);
+    setOffset({ x: relX * strength, y: relY * strength });
+  };
+
+  const handleMouseLeave = () => setOffset({ x: 0, y: 0 });
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      animate={{ x: offset.x, y: offset.y }}
+      transition={{ type: "spring", stiffness: 150, damping: 12, mass: 0.4 }}
+      className="inline-block"
+    >
+      {children}
+    </motion.div>
+  );
+}
