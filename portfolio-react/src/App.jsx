@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import SmoothScroll from "./components/SmoothScroll";
 import IntroScreen from "./components/IntroScreen";
 import Highlights from "./components/Highlights";
+import Services from "./components/Services";
 function App() {
   return (
     <ThemeProvider>
@@ -20,6 +21,7 @@ function App() {
             <Highlights />
             <About />
             <Skills />
+            <Services />
             <Projects />
             <Contact />
           </main>
