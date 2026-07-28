@@ -1,7 +1,7 @@
 // src/components/Skills.jsx
 import { motion } from "framer-motion";
 import { FaReact, FaHtml5, FaJs } from "react-icons/fa";
-import { SiMongodb, SiExpress } from "react-icons/si";
+import { SiMongodb, SiExpress, SiTailwindcss } from "react-icons/si";
 
 const skills = [
   {
@@ -38,6 +38,13 @@ const skills = [
     description: "Debugging real production issues, not just writing syntax.",
     tags: ["CORS Debugging", "ESM Timing Bugs", "Async Flows"],
     color: "from-yellow-400 to-amber-500",
+  },
+  {
+    icon: <SiTailwindcss className="text-2xl" />,
+    name: "Tailwind Css",
+    description: "Utility-first styling for fast, consistent UI development.",
+    tags: ["Responsive Utilities", "Custom Themes", "JIT Compiler"],
+    color: "from-sky-400 to-cyan-500",
   },
 ];
 
