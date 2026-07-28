@@ -77,8 +77,67 @@ const AboutMeIntro = () => {
       />
 
       <div className="container-main relative z-10 grid items-center gap-14 md:grid-cols-2 md:gap-16">
-        {/* Left — bio + CTAs */}
-        <div>
+        {/* Left — Photo with cursor tilt, floating badges, rotating ring */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="relative mx-auto flex justify-center md:order-1"
+        >
+          <div className="relative" style={{ perspective: 1000 }}>
+            {/* Slowly rotating dashed ring behind the photo */}
+            <div
+              aria-hidden="true"
+              className={`absolute top-1/2 left-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-accent/20 md:h-80 md:w-80 ${
+                shouldReduceMotion ? "" : "animate-[spin_30s_linear_infinite]"
+              }`}
+            />
+
+            <motion.div
+              ref={cardRef}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              style={
+                shouldReduceMotion
+                  ? undefined
+                  : { rotateX, rotateY, transformStyle: "preserve-3d" }
+              }
+              className="relative h-64 w-64 overflow-hidden rounded-3xl border-4 border-white shadow-2xl shadow-accent/20 dark:border-white/10 md:h-80 md:w-80"
+            >
+              <img
+                src={kabitaPhoto}
+                alt="Kabita Bhurtel - Full Stack Developer"
+                className="h-full w-full object-cover object-top"
+                loading="eager"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"
+              />
+            </motion.div>
+
+            {/* Floating skill badges — gentle up/down loop via CSS animation,
+                staggered entrance via Framer Motion */}
+            {skillBadges.map(({ label, Icon, position, delay }) => (
+              <motion.div
+                key={label}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay }}
+                className={`card ${position} ${shouldReduceMotion ? "" : "animate-float"} p-3 shadow-lg`}
+              >
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10 text-accent">
+                  <Icon aria-hidden="true" className="text-base" />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Right — bio + CTAs */}
+        <div className="md:order-2">
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -162,65 +221,6 @@ const AboutMeIntro = () => {
             </Magnetic>
           </motion.div>
         </div>
-
-        {/* Right — photo with cursor tilt, floating badges, rotating ring */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto flex justify-center"
-        >
-          <div className="relative" style={{ perspective: 1000 }}>
-            {/* Slowly rotating dashed ring behind the photo */}
-            <div
-              aria-hidden="true"
-              className={`absolute top-1/2 left-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-accent/20 md:h-80 md:w-80 ${
-                shouldReduceMotion ? "" : "animate-[spin_30s_linear_infinite]"
-              }`}
-            />
-
-            <motion.div
-              ref={cardRef}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-              style={
-                shouldReduceMotion
-                  ? undefined
-                  : { rotateX, rotateY, transformStyle: "preserve-3d" }
-              }
-              className="relative h-64 w-64 overflow-hidden rounded-3xl border-4 border-white shadow-2xl shadow-accent/20 dark:border-white/10 md:h-80 md:w-80"
-            >
-              <img
-                src={kabitaPhoto}
-                alt="Kabita Bhurtel - Full Stack Developer"
-                className="h-full w-full object-cover object-top"
-                loading="eager"
-              />
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"
-              />
-            </motion.div>
-
-            {/* Floating skill badges — gentle up/down loop via CSS animation,
-                staggered entrance via Framer Motion */}
-            {skillBadges.map(({ label, Icon, position, delay }) => (
-              <motion.div
-                key={label}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay }}
-                className={`card ${position} ${shouldReduceMotion ? "" : "animate-float"} p-3 shadow-lg`}
-              >
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10 text-accent">
-                  <Icon aria-hidden="true" className="text-base" />
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );
